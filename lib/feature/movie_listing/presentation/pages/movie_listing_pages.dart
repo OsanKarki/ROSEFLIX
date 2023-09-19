@@ -1,4 +1,3 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -55,18 +54,15 @@ class MovieListingPage extends StatelessWidget {
                               crossAxisCount: 2),
                       itemBuilder: (context, index) => Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: GestureDetector(
-                              onTap: () {},
-                              child: Center(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    // context.router
-                                    //     .push(MovieDetailsRoute(id: id));
-                                  },
-                                  child: Image.network(
-                                    'https://image.tmdb.org/t/p/w500/${searchMovies[index].image}',
-                                    // height: 150,
-                                  ),
+                            child: Center(
+                              child: GestureDetector(
+                                onTap: () {
+                                  context.router
+                                      .push(MovieDetailsRoute(id: searchMovies[index].id));
+                                },
+                                child: Image.network(
+                                  'https://image.tmdb.org/t/p/w500/${searchMovies[index].image}',
+                                  // height: 150,
                                 ),
                               ),
                             ),

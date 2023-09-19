@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_notifier/flutter_state_notifier.dart';
@@ -58,7 +59,8 @@ class HomePage extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleLarge),
                 onTap: () {
                   // Add your logic for handling Series here
-                  context.router.push(SeriesDisplayRoute()); // Close the drawer
+                  context.router
+                      .push(const SeriesDisplayRoute()); // Close the drawer
                 },
               ),
               // Add more ListTile items for other sub-items as needed
@@ -66,7 +68,18 @@ class HomePage extends StatelessWidget {
           ),
         ),
         appBar: AppBar(
-          backgroundColor: Colors.black,
+          actions: [
+            SizedBox(
+              width: 100,
+              child: SwitchListTile(
+                value:
+                    AdaptiveTheme.of(context).mode == AdaptiveThemeMode.light,
+                onChanged: (value) {
+                  AdaptiveTheme.of(context).toggleThemeMode();
+                },
+              ),
+            )
+          ],
           title: Text("ROSEFLIX",
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   color: Colors.red,
@@ -75,8 +88,8 @@ class HomePage extends StatelessWidget {
                   fontStyle: FontStyle.italic)),
           centerTitle: true,
         ),
-        backgroundColor: const Color(0xff000000),
         body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: SafeArea(
               child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -139,8 +152,8 @@ class MovieSearchBarSection extends StatelessWidget {
       loading: (_) => const Center(child: CircularProgressIndicator()),
       success: (value) {
         final List<Movie> searchMovies = value.data;
-        return SizedBox(
-            height: 70,
+        return Container(
+            height: 58,
             child: FloatingSearchBar(
               hint: 'Search...',
               scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
@@ -260,8 +273,7 @@ class UpcomingMovieList extends StatelessWidget {
                                       movie.name,
                                       style: Theme.of(context)
                                           .textTheme
-                                          .bodyMedium
-                                          ?.copyWith(color: Colors.white),
+                                          .bodyMedium,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                     ),
@@ -377,8 +389,7 @@ class TopRatedMoviesList extends StatelessWidget {
                                           movie.name,
                                           style: Theme.of(context)
                                               .textTheme
-                                              .bodyMedium
-                                              ?.copyWith(color: Colors.white),
+                                              .bodyMedium,
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                         ),
@@ -473,10 +484,7 @@ class MovieListBuilder extends StatelessWidget {
                               Expanded(
                                 child: Text(
                                   movie.name,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(color: Colors.white),
+                                  style: Theme.of(context).textTheme.bodyMedium,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
